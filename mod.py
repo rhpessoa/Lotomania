@@ -2,7 +2,10 @@ import pickle
 APOSTAS = [{'aposta':[1,2,3,4,5,6,18,19,20]}]
 
 def getApostas():
-    return APOSTAS
+    apostas = []
+    for aposta in APOSTAS:
+        apostas.append(aposta['aposta'])
+    return apostas
 
 
 def nova_aposta(aposta):
@@ -14,8 +17,8 @@ def nova_aposta(aposta):
 
 def apagarAposta(aposta):
     for ap in APOSTAS:
-        if ap == aposta:
-            APOSTAS.remove(aposta)
+        if ap['aposta'] == aposta:
+            APOSTAS.remove(ap)
     
     
 def salvar_dados():

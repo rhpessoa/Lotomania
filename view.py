@@ -25,7 +25,7 @@ def fabrica_checkbox(mensagem):
             tmp.append(cb) # estamos adicionando cada checkbox ate formar uma linha
         layout.append(tmp) # linha completa adicionada ao layout
 
-    layout.append([sg.Button('ok'), sg.Button('cancel')]) # adicionar dois botões ao final do layout
+    layout.append([sg.Button('ok', size = (10,1)), sg.Button('cancel', size = (10,1))]) # adicionar dois botões ao final do layout
     return(layout)
  
 def ler_numeros( resposta ):
@@ -42,7 +42,7 @@ def dialogo_apagar():
               [sg.Text('Voce tem certeza que deseja apagar o contato?')],
               [sg.Button('Confirmar'), sg.Cancel()]]      
 
-    window = sg.Window('Apagar Contato',size=(300, 200), font=('Helvetica', 14)).Layout(layout)    
+    window = sg.Window('Apagar Contato',size=(400, 125), font=('Helvetica', 12)).Layout(layout)    
 
     event, values = window.Read()
     window.Close()

@@ -5,8 +5,9 @@ import view as v
 
 apostas = m.getApostas()
 coluna1 = [
-    [sg.Button('Nova Aposta', key = 'adicionar',size=(15,1))],
+    [sg.Button('Nova Aposta', key = 'adicionar',size=(15,1),  border_width= 1)],
     [sg.Button('Apagar Aposta', key = 'apagar',size=(15,1))],
+    [sg.Button('Conferir Aposta', key = 'conferir',size=(15,1))],
     [sg.Listbox(values = '', size=(35,10), key = '',change_submits=True)],
     [sg.Button('Sair', size=(10,1))],
 ]
@@ -30,7 +31,7 @@ while True:
             ap = m.getApostas()
             janela.FindElement('listaAposta').Update(ap)
     if evento == 'apagar':
-        aposta = valores['listaAposta']
+        aposta = valores['listaAposta'][0]
         r = v.dialogo_apagar()
         if r :
             m.apagarAposta(aposta)
@@ -38,7 +39,7 @@ while True:
             janela.FindElement('listaAposta').Update(ap)
         
         
-    if evento == 'Sair':
+    if evento == 'Sair' or evento is None:
         m.salvar_dados()
+        janela.Close()
         break
-janela.Close()
