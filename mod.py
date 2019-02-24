@@ -1,6 +1,7 @@
 '''
-Arquivo de suporte com as funcoes do software relacionadas ao modelo, contem também a
-estrutura de armazenamento , uma lista de dicionarios chamada APOSTAS
+    Arquivo de suporte com as funções do software relacionadas ao modelo, contém também a
+    estrutura de armazenamento, uma lista de dicionários chamada APOSTAS e uma outra lista
+    chamada LOTERIAS para a realização de testes.
 '''
 import pickle
 
