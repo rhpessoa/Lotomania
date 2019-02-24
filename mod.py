@@ -4,8 +4,9 @@ estrutura de armazenamento , uma lista de dicionarios chamada APOSTAS
 '''
 import pickle
 import numpy as np
+import view as v
 
-APOSTAS = [{'aposta':[1, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]}]
+APOSTAS = [{'aposta':[10, 30, 40, 50, 60, 70, 80, 90, 100, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]}]
 LOTERIAS = [{'resultado':[1, 2, 3, 4, 5]}]
 
 def get_apostas():
@@ -30,8 +31,13 @@ def nova_aposta(aposta):
     '''
         Função para adicionar nova aposta
     '''
-    APOSTAS.append({'aposta':aposta})
-    return True
+    if aposta == -1:
+        pass
+    elif aposta is False:
+        return False
+    else:
+        APOSTAS.append({'aposta':aposta})
+        return True
 
 def novo_resultado(resultado):
     '''
@@ -90,4 +96,6 @@ def ler_numeros(resposta):
         if _r is True:
             numeros.append(num)
         num += 1
+    if len(numeros)==0 or len(numeros)>20:
+        return False
     return numeros

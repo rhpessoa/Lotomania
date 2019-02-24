@@ -23,6 +23,8 @@ def dialogo_checkbox(mensagem):
     if evento == 'Confirmar':
         resposta = m.ler_numeros(valores)
         return resposta
+    if evento == 'Cancelar':
+        return -1
 
 def fabrica_checkbox(mensagem):
     '''
@@ -43,7 +45,7 @@ def fabrica_checkbox(mensagem):
         layout.append(tmp)
             Linha completa adicionada ao layout
 
-        layout.append([sg.Button('Confirmar', size=(10, 1)), sg.Cancel('Cancelar')])
+        layout.append([sg.Button('Confirmar', size=(10, 1)), sg.Button('Cancelar')])
             Adicionar dois botões ao final do layout
     '''
     layout = []
@@ -56,7 +58,7 @@ def fabrica_checkbox(mensagem):
             num += 1
             tmp.append(checkbox)
         layout.append(tmp)
-    layout.append([sg.Button('Confirmar', size=(10, 1)), sg.Cancel('Cancelar')])
+    layout.append([sg.Button('Confirmar', size=(10, 1)), sg.Button('Cancelar', size=(10, 1))])
     return layout
 
 def apagar_aposta():
