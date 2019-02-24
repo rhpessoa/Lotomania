@@ -1,6 +1,6 @@
 '''
-Arquivo que contem os dialogos de suporte da aplicacao que auxiliam as operacoes
-de entrada de nova aposta, remover aposta, etc.
+    Arquivo que contém os diálogos de suporte da aplicação que auxiliam as operações
+    de entrada de nova aposta, remover aposta, etc.
 '''
 import PySimpleGUI as sg
 import mod as m
@@ -10,11 +10,11 @@ def dialogo_checkbox(mensagem):
         Diálogo que deve ser chamado quando se precisar marcar os numeros
 
         layout = fabrica_checkbox(mensagem)
-            Chama a fabrica de checkbox para criar o layout
+            Chama a fábrica de checkbox para criar o layout
             Mensagem é a mensagem que vai no diálogo de checkbox
 
         resposta = m.ler_numeros(valores)
-            Se ok for pressionado chama o ler numeros
+            Se ok for pressionado chama o ler números
     '''
     layout = fabrica_checkbox(mensagem)
     janela = sg.Window('Informe os 20 números da aposta').Layout(layout)
@@ -32,7 +32,7 @@ def fabrica_checkbox(mensagem):
         Usando o padrão de projetos
 
         layout = []
-            Layout que vai ser retornado para compor a janela de dialogo
+            Layout que vai ser retornado para compor a janela de diálogo
 
         layout.append([sg.Text(mensagem)])
             Antes de mais nada coloca uma mensagem como primeira linha do layout
@@ -41,7 +41,7 @@ def fabrica_checkbox(mensagem):
             Um checkbox com o numero fomatado para alinhamento ficar legal
 
         tmp.append(checkbox)
-            Estamos adicionando cada checkbox ate formar uma linha
+            Estamos adicionando cada checkbox até formar uma linha
 
         layout.append(tmp)
             Linha completa adicionada ao layout
