@@ -1,32 +1,37 @@
 '''
     Projeto: Lotomania
 
-1 - Descrição: Um programa para guardar apostas e verificá-las a partir de um input de resultado
+1 - Descrição: Um programa para guardar apostas da Lotomania (CAIXA) e verificá-las a partir
+               de um input de resultado. Determina a quantidade de valores acertados por aposta
+               e indica qual é a premiação de acordo com a CAIXA.
 
-2 - Modulos externos utilizados no projeto:
- PySimpleGUI - https://pysimplegui.readthedocs.io/
+2 - Módulos externos utilizados no projeto:
+    PySimpleGUI - https://pysimplegui.readthedocs.io/
+    Numpy - http://www.numpy.org/
 
-3 - Descricao do componente: componente princial que guarda a descricao da Interface grafica com o
-    usuario
+3 - Descricao do componente: Componente princial que guarda a descrição da interface gráfica com o
+    usuário e acessa os componentes auxiliares.
 
 Autores: Cayo Araujo - Matrícula: 2018001549 - cayorodrigues15@gmail.com
          Daniel Bahia Pinheiro - Matrícula: 2018001530- booude@gmail.com
-         Felipe Moraes - Matrícula: 2018000000 - email@gmail.com
-         Gabriel Carvalho Pinto - Matrícula: 2018000000 - email@gmail.com
+         Felipe Moraes - Matrícula: 2018001600 - lipe-evo3@hotmail.com
+         Gabriel Carvalho Pinto - Matrícula: 2018001502 - gabriel_carvalho_pinto@outlook.com
          Rafael Henrique Pessoa - Matrícula: 2018004747 - rhpessoa29@gmail.com
          Yuri da Penha Ferreira - Matrícula: 2018005314 - yferreira30@gmail.com
-versao : alpha 0.7
+
+Versão : alpha 0.7
 
 4 - Descrição dos arquivos do projeto:
-- main.py - Aquivo principal que contem a interface grafica com o usuario
+- main.py - Arquivo principal que contém a interface gráfica com o usuário
 
-- mod.py - Arquivo de suporte com as funcoes do software relacionadas ao modelo, contem também a
-estrutura de armazenamento, uma lista de dicionarios chamada APOSTAS
+- mod.py - Arquivo de suporte com as funções do software relacionadas ao modelo, contém também a
+           estrutura de armazenamento, uma lista de dicionários chamada APOSTAS e uma outra lista
+           chamada LOTERIAS para a realização de testes.
 
-- view.py : Arquivo que contem os dialogos de suporte da aplicacao que auxiliam as operacoes
-de entrada de nova aposta, remover aposta, etc.
+- view.py - Arquivo que contém os diálogos de suporte da aplicação que auxiliam as operações
+            de entrada de nova aposta, remover aposta, etc.
 
-- apostas.bin : Arquivo binario que guardas os dados da aplicação
+- apostas.bin - Arquivo binário que guarda os dados da aplicação.
 '''
 import PySimpleGUI as sg
 import mod as m
@@ -116,4 +121,3 @@ Selecione uma aposta da lista.''' .format(_e), font=('Helvetica', 14))
         m.salvar_dados()
         JANELA.Close()
         break
-    
