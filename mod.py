@@ -3,24 +3,40 @@ Arquivo de suporte com as funcoes do software relacionadas ao modelo, contem tam
 estrutura de armazenamento , uma lista de dicionarios chamada APOSTAS
 '''
 import pickle
+import numpy as np
 
 APOSTAS = [{'aposta':[1, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]}]
-LOTERIA = [1, 2, 3, 4, 5]
+LOTERIAS = [{'resultado':[1, 2, 3, 4, 5]}]
 
 def get_apostas():
     '''
         Função para enviar valores das apostas ao main
     '''
     apostas = []
-    for aposta in APOSTAS:
-        apostas.append(aposta['aposta'])
+    for valor in APOSTAS:
+        apostas.append(valor['aposta'])
     return apostas
+
+def get_loteria():
+    '''
+        Função para enviar valores dos resultados ao main
+    '''
+    loteria = []
+    for valor in LOTERIAS:
+        loteria.append(valor['resultado'])
+    return loteria
 
 def nova_aposta(aposta):
     '''
         Função para adicionar nova aposta
     '''
     APOSTAS.append({'aposta':aposta})
+    return True
+
+def novo_resultado(resultado):
+    '''
+        Função para adicionar novo resultado
+    '''
     return True
 
 def apagar_aposta(aposta):
@@ -53,13 +69,25 @@ def carregar_dados():
     except FileNotFoundError:
         print('Error sei la')
 
-def conferir_resultado(resultado):
+def conferir_resultado(resultado, loteria):
     '''
-        Tentativa de implementar verificação de resultado
+        Verificação de resultado
     '''
     match = []
     for i in resultado:
-        for j in LOTERIA:
+        for j in loteria:
             if i == j:
                 match.append(i)
     return match
+
+def ler_numeros(resposta):
+    '''
+        Módulo auxiliar da fábrica de checkbox
+    '''
+    numeros = []
+    num = 1
+    for _r in resposta:
+        if _r is True:
+            numeros.append(num)
+        num += 1
+    return numeros

@@ -3,6 +3,7 @@ Arquivo que contem os dialogos de suporte da aplicacao que auxiliam as operacoes
 de entrada de nova aposta, remover aposta, etc.
 '''
 import PySimpleGUI as sg
+import mod as m
 
 def dialogo_checkbox(mensagem):
     '''
@@ -12,7 +13,7 @@ def dialogo_checkbox(mensagem):
             Chama a fabrica de checkbox para criar o layout
             Mensagem é a mensagem que vai no diálogo de checkbox
 
-        resposta = ler_numeros(valores)
+        resposta = m.ler_numeros(valores)
             Se ok for pressionado chama o ler numeros
     '''
     layout = fabrica_checkbox(mensagem)
@@ -20,7 +21,7 @@ def dialogo_checkbox(mensagem):
     evento, valores = janela.Read()
     janela.Close()
     if evento == 'Confirmar':
-        resposta = ler_numeros(valores)
+        resposta = m.ler_numeros(valores)
         return resposta
 
 def fabrica_checkbox(mensagem):
@@ -57,18 +58,6 @@ def fabrica_checkbox(mensagem):
         layout.append(tmp)
     layout.append([sg.Button('Confirmar', size=(10, 1)), sg.Cancel('Cancelar')])
     return layout
-
-def ler_numeros(resposta):
-    '''
-        o q é isso
-    '''
-    numeros = []
-    num = 1
-    for _r in resposta:
-        if _r is True:
-            numeros.append(num)
-        num += 1
-    return numeros
 
 def apagar_aposta():
     '''

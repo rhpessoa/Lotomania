@@ -9,13 +9,13 @@
 3 - Descricao do componente: componente princial que guarda a descricao da Interface grafica com o
     usuario
 
-Autores: Cayo Araujo - Matrícula: 2019000000 - email@gmail.com
-         Daniel Bahia Pinheiro - Matrícula: 2019001530- booude@gmail.com
-         Felipe Moraes - Matrícula: 2019000000 - email@gmail.com
-         Gabriel Carvalho - Matrícula: 2019000000 - email@gmail.com
-         Rafael - Matrícula: 2019000000 - email@gmail.com
-         Yuri da Penha Ferreira - Matrícula: 2019001530 - yferreira30@gmail.com
-versao : alpha 0.4
+Autores: Cayo Araujo - Matrícula: 2018000000 - email@gmail.com
+         Daniel Bahia Pinheiro - Matrícula: 2018001530- booude@gmail.com
+         Felipe Moraes - Matrícula: 2018000000 - email@gmail.com
+         Gabriel Carvalho - Matrícula: 2018000000 - email@gmail.com
+         Rafael Henrique Pessoa - Matrícula: 2018004747 - rhpessoa29@gmail.com
+         Yuri da Penha Ferreira - Matrícula: 2018005314 - yferreira30@gmail.com
+versao : alpha 0.5
 
 4 - Descrição dos arquivos do projeto:
 - main.py - Aquivo principal que contem a interface grafica com o usuario
@@ -33,6 +33,7 @@ import mod as m
 import view as v
 
 APOSTAS = m.get_apostas()
+LOTERIAS = m.get_loteria()
 
 sg.SetOptions(background_color='#f0f0f0',
               text_element_background_color='#f0f0f0',
@@ -45,6 +46,7 @@ sg.SetOptions(background_color='#f0f0f0',
 COLUNA1 = [
     [sg.Button('Nova Aposta', key='adicionar', size=(15, 1))],
     [sg.Button('Apagar Aposta', key='apagar', size=(15, 1))],
+    [sg.Button('Números Sorteados', key='sorteados', size=(15, 1))],
     [sg.Button('Conferir Aposta', key='conferir', size=(15, 1))],
     [sg.Listbox(values='', size=(30, 10), key='listaResultado', change_submits=True)],
     [sg.Button('Sair', size=(10, 1))],
@@ -59,7 +61,7 @@ LAYOUT = [
          sg.Column(COLUNA2, size=(None, None), background_color='#f0f0f0')]
         ]
 
-JANELA = sg.Window('Lotomania', size=(935, 471), font=('Helvetica', 14)).Layout(LAYOUT)
+JANELA = sg.Window('Lotomania', size=(935, 515), font=('Helvetica', 14)).Layout(LAYOUT)
 
 while True:
     EVENTO, VALORES = JANELA.Read()
@@ -72,10 +74,18 @@ while True:
             JANELA.FindElement('listaAposta').Update(AP)
             APOSTAS = AP
 
+    if EVENTO == 'sorteados':
+        RESULTADO = v.dialogo_checkbox("Cadastro de resultado")
+        R = m.novo_resultado(RESULTADO)
+        if R:
+            sg.Popup('Resultado adicionado!', font=('Helvetica', 14))
+            LOTERIAS = m.get_loteria()
+
     if EVENTO == 'conferir':
         APOSTA = VALORES['listaAposta'][0]
-        R = m.conferir_resultado(APOSTA)
-        JANELA.FindElement('listaResultado').Update(R)
+        LOTERIA = LOTERIAS[0]
+        R = m.conferir_resultado(APOSTA, LOTERIA)
+        JANELA.FindElement('listaResultado').Update(['Você acertou {} número(s)'.format(len(R))])
 
     if EVENTO == 'apagar':
         APOSTA = VALORES['listaAposta'][0]
@@ -84,6 +94,7 @@ while True:
             m.apagar_aposta(APOSTA)
             AP = m.get_apostas()
             JANELA.FindElement('listaAposta').Update(AP)
+            JANELA.FindElement('listaResultado').Update(AP)
 
     if EVENTO == 'Sair' or EVENTO is None:
         m.salvar_dados()
