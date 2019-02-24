@@ -1,45 +1,92 @@
+'''
+    Projeto: Lotomania
+
+1 - Descrição: Um programa para guardar apostas e verificá-las a partir de um input de resultado
+
+2 - Modulos externos utilizados no projeto:
+ PySimpleGUI - https://pysimplegui.readthedocs.io/
+
+3 - Descricao do componente: componente princial que guarda a descricao da Interface grafica com o
+    usuario
+
+Autores: Cayo Araujo - Matrícula: 2019000000 - email@gmail.com
+         Daniel Bahia Pinheiro - Matrícula: 2019001530- booude@gmail.com
+         Felipe Moraes - Matrícula: 2019000000 - email@gmail.com
+         Gabriel Carvalho - Matrícula: 2019000000 - email@gmail.com
+         Rafael - Matrícula: 2019000000 - email@gmail.com
+         Yuri da Penha Ferreira - Matrícula: 2019001530 - yferreira30@gmail.com
+versao : alpha 0.4
+
+4 - Descrição dos arquivos do projeto:
+- main.py - Aquivo principal que contem a interface grafica com o usuario
+
+- mod.py - Arquivo de suporte com as funcoes do software relacionadas ao modelo, contem também a
+estrutura de armazenamento, uma lista de dicionarios chamada APOSTAS
+
+- view.py : Arquivo que contem os dialogos de suporte da aplicacao que auxiliam as operacoes
+de entrada de nova aposta, remover aposta, etc.
+
+- apostas.bin : Arquivo binario que guardas os dados da aplicação
+'''
 import PySimpleGUI as sg
 import mod as m
 import view as v
 
+APOSTAS = m.get_apostas()
 
-apostas = m.getApostas()
-coluna1 = [
-    [sg.Button('Nova Aposta', key = 'adicionar',size=(15,1),  border_width= 1)],
-    [sg.Button('Apagar Aposta', key = 'apagar',size=(15,1))],
-    [sg.Button('Conferir Aposta', key = 'conferir',size=(15,1))],
-    [sg.Listbox(values = '', size=(35,10), key = '',change_submits=True)],
-    [sg.Button('Sair', size=(10,1))],
+sg.SetOptions(background_color='#f0f0f0',
+              text_element_background_color='#f0f0f0',
+              element_background_color='#f0f0f0',
+              input_elements_background_color='#F7F3EC',
+              button_color=('#f0f0f0', '#475841'),
+              font='Helvetica',
+              border_width=5)
+
+COLUNA1 = [
+    [sg.Button('Nova Aposta', key='adicionar', size=(15, 1))],
+    [sg.Button('Apagar Aposta', key='apagar', size=(15, 1))],
+    [sg.Button('Conferir Aposta', key='conferir', size=(15, 1))],
+    [sg.Listbox(values='', size=(30, 10), key='listaResultado', change_submits=True)],
+    [sg.Button('Sair', size=(10, 1))],
 ]
-coluna2 = [
-        [sg.Listbox(values = apostas, size=(100,100), key = 'listaAposta',change_submits=True)]
-        ]
-layout = [
-            [sg.Column(coluna1,size=(500,500)) , sg.Column(coluna2, size=(600,400))],
+
+COLUNA2 = [
+        [sg.Listbox(values=APOSTAS, size=(40, 30), key='listaAposta', change_submits=True)]
         ]
 
-janela = sg.Window('Lotomania', size=(900, 600), font=('Helvetica', 14)).Layout(layout)
+LAYOUT = [
+        [sg.Column(COLUNA1, size=(None, None), background_color='#f0f0f0'),
+         sg.Column(COLUNA2, size=(None, None), background_color='#f0f0f0')]
+        ]
 
+JANELA = sg.Window('Lotomania', size=(935, 471), font=('Helvetica', 14)).Layout(LAYOUT)
 
 while True:
-    evento, valores = janela.Read()
-    if evento == 'adicionar':
-        aposta = v.dialogo_checkbox("Informe os 20 números da aposta", "Cadastro de apostas")
-        r = m.nova_aposta(aposta)
-        if r :
-            sg.Popup('Aposta adicionada com sucesso!',font=('Helvetica', 14))
-            ap = m.getApostas()
-            janela.FindElement('listaAposta').Update(ap)
-    if evento == 'apagar':
-        aposta = valores['listaAposta'][0]
-        r = v.dialogo_apagar()
-        if r :
-            m.apagarAposta(aposta)
-            ap = m.getApostas()
-            janela.FindElement('listaAposta').Update(ap)
-        
-        
-    if evento == 'Sair' or evento is None:
+    EVENTO, VALORES = JANELA.Read()
+    if EVENTO == 'adicionar':
+        APOSTA = v.dialogo_checkbox("Cadastro de apostas")
+        R = m.nova_aposta(APOSTA)
+        if R:
+            sg.Popup('Aposta adicionada com sucesso!', font=('Helvetica', 14))
+            AP = m.get_apostas()
+            JANELA.FindElement('listaAposta').Update(AP)
+            APOSTAS = AP
+
+    if EVENTO == 'conferir':
+        APOSTA = VALORES['listaAposta'][0]
+        R = m.conferir_resultado(APOSTA)
+        JANELA.FindElement('listaResultado').Update(R)
+
+    if EVENTO == 'apagar':
+        APOSTA = VALORES['listaAposta'][0]
+        R = v.apagar_aposta()
+        if R:
+            m.apagar_aposta(APOSTA)
+            AP = m.get_apostas()
+            JANELA.FindElement('listaAposta').Update(AP)
+
+    if EVENTO == 'Sair' or EVENTO is None:
         m.salvar_dados()
-        janela.Close()
+        JANELA.Close()
         break
+    

@@ -1,53 +1,86 @@
+'''
+Arquivo que contem os dialogos de suporte da aplicacao que auxiliam as operacoes
+de entrada de nova aposta, remover aposta, etc.
+'''
 import PySimpleGUI as sg
-    
-# dialogo que deve ser chamado quando se precisar marcar os numeros
-def dialogo_checkbox(mensagem, titulo_janela):
-    layout =  fabrica_checkbox(mensagem) # chama a fabrica de checkbox para criar o layout
-    # mensagem é mensagem que vai no dialogo de checkbox
-    window = sg.Window(titulo_janela).Layout(layout) # titulo é o titulo da janela
-    evento, valores = window.Read()
-    window.Close()
-    if evento == 'ok':
-        resposta = ler_numeros(valores) # se ok for pressionado chama o ler numeros
-        #sg.Popup('Aposta adicionada com sucesso!',font=('Helvetica', 14))
-        return resposta
- 
-# usando o padrao de projetos 
-def fabrica_checkbox(mensagem):
-    layout=[] # layout que vai ser retornado para compor a janela de dialogo
-    num = 1
-    layout.append([sg.Text(mensagem)])#antes de mais nada coloca uma mensagem como primeira linha do layout
-    for linhas in range(10): # 10 linhas
-        tmp=[]
-        for i in range(10): # por 10 colunas = 100 numeros
-            cb = sg.Checkbox(str('%02d'%(num))) # um checkbox com o numero fomatado para alinhamento ficar legal
-            num +=1
-            tmp.append(cb) # estamos adicionando cada checkbox ate formar uma linha
-        layout.append(tmp) # linha completa adicionada ao layout
 
-    layout.append([sg.Button('ok', size = (10,1)), sg.Button('cancel', size = (10,1))]) # adicionar dois botões ao final do layout
-    return(layout)
- 
-def ler_numeros( resposta ):
-    numeros =[]
+def dialogo_checkbox(mensagem):
+    '''
+        Diálogo que deve ser chamado quando se precisar marcar os numeros
+
+        layout = fabrica_checkbox(mensagem)
+            Chama a fabrica de checkbox para criar o layout
+            Mensagem é a mensagem que vai no diálogo de checkbox
+
+        resposta = ler_numeros(valores)
+            Se ok for pressionado chama o ler numeros
+    '''
+    layout = fabrica_checkbox(mensagem)
+    janela = sg.Window('Informe os 20 números da aposta').Layout(layout)
+    evento, valores = janela.Read()
+    janela.Close()
+    if evento == 'Confirmar':
+        resposta = ler_numeros(valores)
+        return resposta
+
+def fabrica_checkbox(mensagem):
+    '''
+        Usando o padrão de projetos
+
+        layout = []
+            Layout que vai ser retornado para compor a janela de dialogo
+
+        layout.append([sg.Text(mensagem)])
+            Antes de mais nada coloca uma mensagem como primeira linha do layout
+
+        cb = sg.Checkbox(str('%02d'%(num)))
+            Um checkbox com o numero fomatado para alinhamento ficar legal
+
+        tmp.append(checkbox)
+            Estamos adicionando cada checkbox ate formar uma linha
+
+        layout.append(tmp)
+            Linha completa adicionada ao layout
+
+        layout.append([sg.Button('Confirmar', size=(10, 1)), sg.Cancel('Cancelar')])
+            Adicionar dois botões ao final do layout
+    '''
+    layout = []
     num = 1
-    for r in resposta:
-        if r == True:
+    layout.append([sg.Text(mensagem)])
+    for linhas in range(10):
+        tmp = []
+        for colunas in range(10):
+            checkbox = sg.Checkbox(str('%02d'%(num)))
+            num += 1
+            tmp.append(checkbox)
+        layout.append(tmp)
+    layout.append([sg.Button('Confirmar', size=(10, 1)), sg.Cancel('Cancelar')])
+    return layout
+
+def ler_numeros(resposta):
+    '''
+        o q é isso
+    '''
+    numeros = []
+    num = 1
+    for _r in resposta:
+        if _r is True:
             numeros.append(num)
-        num = num + 1
+        num += 1
     return numeros
 
-def dialogo_apagar():
-    layout = [[sg.Text('Apagar contato')],      
-              [sg.Text('Voce tem certeza que deseja apagar o contato?')],
-              [sg.Button('Confirmar'), sg.Cancel()]]      
+def apagar_aposta():
+    '''
+        Função para mostrar o diálogo de apagar aposta
+    '''
+    layout = [[sg.Text('Apagar aposta')],
+              [sg.Text('Voce tem certeza que deseja apagar a aposta?')],
+              [sg.Button('Confirmar'), sg.Cancel('Cancelar')]]
 
-    window = sg.Window('Apagar Contato',size=(400, 125), font=('Helvetica', 12)).Layout(layout)    
+    janela = sg.Window('Apagar aposta', size=(400, 125), font=('Helvetica', 12)).Layout(layout)
 
-    event, values = window.Read()
-    window.Close()
-    if event == 'Confirmar':
+    evento, valores = janela.Read()
+    janela.Close()
+    if evento == 'Confirmar':
         return True
-    else:
-        False
-
