@@ -3,8 +3,6 @@ Arquivo de suporte com as funcoes do software relacionadas ao modelo, contem tam
 estrutura de armazenamento , uma lista de dicionarios chamada APOSTAS
 '''
 import pickle
-import numpy as np
-import view as v
 
 APOSTAS = [{'aposta':[10, 30, 40, 50, 60, 70, 80, 90, 100, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]}]
 LOTERIAS = [{'resultado':[1, 2, 3, 4, 5]}]
@@ -38,12 +36,21 @@ def nova_aposta(aposta):
     else:
         APOSTAS.append({'aposta':aposta})
         return True
+    return None
 
 def novo_resultado(resultado):
     '''
         Função para adicionar novo resultado
     '''
-    return True
+    if resultado == -1:
+        pass
+    elif resultado is False:
+        return False
+    else:
+        del LOTERIAS[:]
+        LOTERIAS.append({'resultado':resultado})
+        return True
+    return None
 
 def apagar_aposta(aposta):
     '''
@@ -96,6 +103,6 @@ def ler_numeros(resposta):
         if _r is True:
             numeros.append(num)
         num += 1
-    if len(numeros)==0 or len(numeros)>20:
+    if not numeros or len(numeros) > 20:
         return False
     return numeros

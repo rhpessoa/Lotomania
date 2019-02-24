@@ -9,13 +9,13 @@
 3 - Descricao do componente: componente princial que guarda a descricao da Interface grafica com o
     usuario
 
-Autores: Cayo Araujo - Matrícula: 2018000000 - email@gmail.com
+Autores: Cayo Araujo - Matrícula: 2018001549 - cayorodrigues15@gmail.com
          Daniel Bahia Pinheiro - Matrícula: 2018001530- booude@gmail.com
          Felipe Moraes - Matrícula: 2018000000 - email@gmail.com
-         Gabriel Carvalho - Matrícula: 2018000000 - email@gmail.com
+         Gabriel Carvalho Pinto - Matrícula: 2018000000 - email@gmail.com
          Rafael Henrique Pessoa - Matrícula: 2018004747 - rhpessoa29@gmail.com
          Yuri da Penha Ferreira - Matrícula: 2018005314 - yferreira30@gmail.com
-versao : alpha 0.6
+versao : alpha 0.7
 
 4 - Descrição dos arquivos do projeto:
 - main.py - Aquivo principal que contem a interface grafica com o usuario
@@ -48,7 +48,7 @@ COLUNA1 = [
     [sg.Button('Apagar Aposta', key='apagar', size=(15, 1))],
     [sg.Button('Números Sorteados', key='sorteados', size=(15, 1))],
     [sg.Button('Conferir Aposta', key='conferir', size=(15, 1))],
-    [sg.Text('', key='listaResultado', size=(20,3))],
+    [sg.Text('', key='listaResultado', size=(20, 3))],
     [sg.Button('Sair', size=(10, 1))],
 ]
 
@@ -66,39 +66,51 @@ JANELA = sg.Window('Lotomania', size=(880, 360), font=('Helvetica', 14)).Layout(
 while True:
     EVENTO, VALORES = JANELA.Read()
     if EVENTO == 'adicionar':
+        APOSTA = v.dialogo_checkbox("Cadastro de apostas")
+        R = m.nova_aposta(APOSTA)
+        while R is False:
+            sg.Popup('Por favor, escolha de 1 a 20 números!', font=('Helvetica', 14))
             APOSTA = v.dialogo_checkbox("Cadastro de apostas")
             R = m.nova_aposta(APOSTA)
-            while R is False:
-                sg.Popup('Por favor, escolha de 1 a 20 números!', font=('Helvetica', 14))
-                APOSTA = v.dialogo_checkbox("Cadastro de apostas")
-                R = m.nova_aposta(APOSTA)
-            if R:
-                sg.Popup('Aposta adicionada com sucesso!', font=('Helvetica', 14))
-                AP = m.get_apostas()
-                JANELA.FindElement('listaAposta').Update(AP)
-                APOSTAS = AP
+        if R:
+            sg.Popup('Aposta adicionada com sucesso!', font=('Helvetica', 14))
+            AP = m.get_apostas()
+            JANELA.FindElement('listaAposta').Update(AP)
+            APOSTAS = AP
 
     if EVENTO == 'sorteados':
         RESULTADO = v.dialogo_checkbox("Cadastro de resultado")
         R = m.novo_resultado(RESULTADO)
+        while R is False:
+            sg.Popup('Por favor, escolha 20 números!', font=('Helvetica', 14))
+            RESULTADO = v.dialogo_checkbox("Cadastro de resultado")
+            R = m.novo_resultado(RESULTADO)
         if R:
             sg.Popup('Resultado adicionado!', font=('Helvetica', 14))
             LOTERIAS = m.get_loteria()
 
     if EVENTO == 'conferir':
-        APOSTA = VALORES['listaAposta'][0]
-        LOTERIA = LOTERIAS[0]
-        R = m.conferir_resultado(APOSTA, LOTERIA)
-        JANELA.FindElement('listaResultado').Update('Você acertou {} número(s)'.format(len(R)))
+        try:
+            APOSTA = VALORES['listaAposta'][0]
+            LOTERIA = LOTERIAS[0]
+            R = m.conferir_resultado(APOSTA, LOTERIA)
+            JANELA.FindElement('listaResultado').Update('Você acertou {} número(s)'.format(len(R)))
+        except IndexError as _e:
+            sg.Popup('''Erro "{}"
+Selecione uma aposta da lista.''' .format(_e), font=('Helvetica', 14))
 
     if EVENTO == 'apagar':
-        APOSTA = VALORES['listaAposta'][0]
-        R = v.apagar_aposta()
-        if R:
-            m.apagar_aposta(APOSTA)
-            AP = m.get_apostas()
-            JANELA.FindElement('listaAposta').Update(AP)
-            JANELA.FindElement('listaResultado').Update('')
+        try:
+            APOSTA = VALORES['listaAposta'][0]
+            R = v.apagar_aposta()
+            if R:
+                m.apagar_aposta(APOSTA)
+                AP = m.get_apostas()
+                JANELA.FindElement('listaAposta').Update(AP)
+                JANELA.FindElement('listaResultado').Update('')
+        except IndexError as _e:
+            sg.Popup('''Erro "{}"
+Selecione uma aposta da lista.''' .format(_e), font=('Helvetica', 14))
 
     if EVENTO == 'Sair' or EVENTO is None:
         m.salvar_dados()

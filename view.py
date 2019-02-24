@@ -25,6 +25,7 @@ def dialogo_checkbox(mensagem):
         return resposta
     if evento == 'Cancelar':
         return -1
+    return None
 
 def fabrica_checkbox(mensagem):
     '''
@@ -51,9 +52,9 @@ def fabrica_checkbox(mensagem):
     layout = []
     num = 1
     layout.append([sg.Text(mensagem)])
-    for linhas in range(10):
+    for _ in range(10):
         tmp = []
-        for colunas in range(10):
+        for _ in range(10):
             checkbox = sg.Checkbox(str('%02d'%(num)))
             num += 1
             tmp.append(checkbox)
@@ -71,7 +72,8 @@ def apagar_aposta():
 
     janela = sg.Window('Apagar aposta', size=(400, 125), font=('Helvetica', 12)).Layout(layout)
 
-    evento, valores = janela.Read()
+    evento, _ = janela.Read()
     janela.Close()
     if evento == 'Confirmar':
         return True
+    return None
