@@ -8,5 +8,5 @@ também se utilizados.🗸
 * 3- O software deve ter uma rotina para apagar apostas que o usuário não usa mais.🗸
 * 4- O software deve ter uma rotina para imprimir toda a lista de apostas.🗸
 * 5- O software deve ter uma rotina que dado um determinado resultado, ele confira quantos números foram acertados em cada jogo cadastrado e imprima isso na tela.🗸
-* 6- Para cada conjunto de apostas conferidas o software deve informar se o usuário ganhou alguma coisa ( ver regras no site ou na lotérica mais próxima). (Em andamento/Fácil Implementação)
-* 7- O software deve ter uma rotina para gravar e ler os dados em arquivos. (Estará na próxima versão)
+* 6- Para cada conjunto de apostas conferidas o software deve informar se o usuário ganhou alguma coisa ( ver regras no site ou na lotérica mais próxima).🗸
+* 7- O software deve ter uma rotina para gravar e ler os dados em arquivos.🗸
