@@ -108,3 +108,4 @@ def ler_numeros(resposta):
     if not numeros or len(numeros) > 20:
         return False
     return numeros
+
