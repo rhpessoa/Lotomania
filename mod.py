@@ -5,8 +5,8 @@
 '''
 import pickle
 
-APOSTAS = [{'aposta':[10, 30, 40, 50, 60, 70, 80, 90, 100, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]}]
-LOTERIAS = [{'resultado':[1, 2, 3, 4, 5]}]
+APOSTAS = []
+LOTERIAS = [{'resultado':[]}]
 
 def get_apostas():
     '''
@@ -55,7 +55,8 @@ def novo_resultado(resultado):
 
 def apagar_aposta(aposta):
     '''
-        Função para apagar as apostas individualmente através da seleção na listbox
+        Função para apagar as apostas individualmente
+        através da seleção na listbox
     '''
     for _ap in APOSTAS:
         if _ap['aposta'] == aposta:
