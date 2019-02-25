@@ -19,7 +19,7 @@ Autores: Cayo Rodrigues Araujo  - Matrícula: 2018001549 - cayorodrigues15@gmail
          Rafael Henrique Pessoa - Matrícula: 2018004747 - rhpessoa29@gmail.com
          Yuri da Penha Ferreira - Matrícula: 2018005314 - yferreira30@gmail.com
 
-Versão : alpha 0.8
+Versão : beta 0.8
 
 4 - Descrição dos arquivos do projeto:
 - main.py - Arquivo principal que contém a interface gráfica com o usuário
