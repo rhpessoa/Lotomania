@@ -23,9 +23,8 @@ def dialogo_checkbox(mensagem):
     if evento == 'Confirmar':
         resposta = m.ler_numeros(valores)
         return resposta
-    if evento == 'Cancelar':
-        return -1
-    return None
+    
+    return -1
 
 def fabrica_checkbox(mensagem):
     '''
@@ -77,3 +76,4 @@ def apagar_aposta():
     if evento == 'Confirmar':
         return True
     return None
+
