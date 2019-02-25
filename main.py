@@ -115,8 +115,7 @@ while True:
             else:
                 JANELA.FindElement('premio').Update('Boa sorte na próxima vez')
         except IndexError as _e:
-            sg.Popup('''Erro "{}"
-Selecione uma aposta da lista.''' .format(_e), font=('Helvetica', 14))
+            sg.Popup('Erro', 'Selecione uma aposta da lista.', font=('Helvetica', 14))
 
     if EVENTO == 'apagar':
         try:
@@ -129,10 +128,10 @@ Selecione uma aposta da lista.''' .format(_e), font=('Helvetica', 14))
                 JANELA.FindElement('listaResultado').Update('')
                 JANELA.FindElement('premio').Update('')
         except IndexError as _e:
-            sg.Popup('''Erro "{}"
-Selecione uma aposta da lista.''' .format(_e), font=('Helvetica', 14))
+            sg.Popup('Erro', 'Selecione uma aposta da lista.', font=('Helvetica', 14))
 
-    if EVENTO == 'Sair' or EVENTO is None:
+    if EVENTO == 'Sair' or None:
         m.salvar_dados()
         break
 JANELA.Close()
+
